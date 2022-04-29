@@ -1,5 +1,7 @@
 use std::io;
 
+use crate::util::printer_float;
+
 pub fn calculator_imp() {
     println!("WELCOME TO SIMPLE CALCULATOR APP");
 
@@ -58,22 +60,20 @@ fn get_number() -> (f32, f32) {
     return (first_value_f, second_value);
 }
 
-fn final_printer(result: f32) {
-    println!("\n\nresult -> {result}\n\n")
-}
+
 
 fn sum_operations(inputs: (f32, f32)) {
-    final_printer(inputs.0 + inputs.1);
+    printer_float(inputs.0 + inputs.1);
 }
 
 fn sub_operations(inputs: (f32, f32)) {
-    final_printer(inputs.0 - inputs.1);
+    printer_float(inputs.0 - inputs.1);
 }
 
 fn mul_operations(inputs: (f32, f32)) {
-    final_printer(inputs.0 * inputs.1);
+    printer_float(inputs.0 * inputs.1);
 }
 
 fn div_operations(inputs: (f32, f32)) {
-    final_printer(inputs.0 / inputs.1);
+    printer_float(inputs.0 / inputs.1);
 }

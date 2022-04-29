@@ -1,10 +1,14 @@
 use std::io;
 
 pub fn printer_vector(content: Vec<String>) {
-        println!("{:?}", content);
+    println!("{:?}", content);
 }
 
 pub fn printer_string(content: String) {
+    println!("{}", content);
+}
+
+pub fn printer_float(content: f32) {
     println!("{}", content);
 }
 
