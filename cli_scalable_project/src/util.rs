@@ -3,13 +3,14 @@ use std::io;
 pub fn printer_vector(content: Vec<String>) {
         println!("{:?}", content);
 }
-/* 
+
 pub fn printer_string(content: String) {
     println!("{}", content);
-}*/
+}
 
 pub fn input_to_vector() -> Vec<String> {
-
+    
+    println!("\nenter command: ");
     let input_command = input_to_string();
     let v: Vec<String> = input_command.split_whitespace().map(|str| str.to_string()).collect();
 
