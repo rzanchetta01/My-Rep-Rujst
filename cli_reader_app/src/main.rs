@@ -1,35 +1,56 @@
 use std::env;
-use std::fs;
+use std::process;
+use std::io;
+
+use cli_reader_app::printer_string;
+use cli_reader_app::printer_vector;
+use cli_reader_app::read_text;
+use cli_reader_app::search_in_text;
+use cli_reader_app::Config;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    let config: Config = Config::new(&args);
-
-    println!(
-        "Searchinf for {} in the path: {}",
-        config.filename, config.filepath
-    );
+    const NUM_ARGS: usize = 2;
     
-    let read_result: String = read_text(config);
-    println!("{read_result}");
-}
+    let mut args: Vec<String> = env::args().collect();
+    loop {
+        
+        let config: Config = Config::new(&args.clone(), NUM_ARGS).unwrap_or_else(|err| {
+            println!("problem parsing : {err}");
+            process::exit(1);
+        });
 
-struct Config {
-    filename: String,
-    filepath: String,
-}
+        println!("Searching for in the path: {}", config.filepath);
+        let mut text: String = String::new();
 
-impl Config {
-    fn new(args: &[String]) -> Config {
-        let filename: String = args[1].clone();
-        let filepath: String = args[2].clone();
+        if let Err(e) = read_text(config.clone()) {
+            println!("aplication error: {}", e);
+        } else if let Ok(e) = read_text(config.clone()) {
+            text = e.clone();
 
-        return Config { filename, filepath };
+            let filter: String = "-donotread".trim().to_string();
+
+            if !args.clone().contains(&filter) {
+                printer_string(e);
+            }
+        }
+
+        if let Err(e) = search_in_text(&text, &config.searchkeyword) {
+            println!("aplication error: {}", e);
+        } else if let Ok(e) = search_in_text(&text, &config.searchkeyword) {
+            printer_vector(e);
+        }
+
+        args = user_input(args);
     }
 }
 
-fn read_text(search: Config) -> String {
-    let contents: String = fs::read_to_string(search.filepath).expect("ERROR READING THE FILE");
+fn user_input(mut args : Vec<String>) -> Vec<String> {
 
-    return contents;
+    let mut input_command = String::new();
+    io::stdin().read_line(&mut input_command).expect("ERROR READING NEW COMMAND");
+
+    args.drain(1..);
+    let mut new_args: Vec<String> = input_command.split_whitespace().map(|str| str.to_string()).collect();
+    args.append(&mut new_args);
+    return args;
 }
