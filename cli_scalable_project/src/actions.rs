@@ -1,4 +1,4 @@
-use crate::{file_explorer, util, command_structure};
+use crate::{file_explorer, util, command_structure, calculator::calculator_imp};
 
 pub fn read_actions(args: Vec<String>, is_debug: bool) {
     if args.contains(&command_structure::FileSistemCommands::_Path.to_string()) {
@@ -54,4 +54,6 @@ pub fn read_actions(args: Vec<String>, is_debug: bool) {
     }
 }
 
-pub fn calculator_actions() {}
+pub fn calculator_actions() {
+    calculator_imp();
+}

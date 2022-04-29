@@ -3,6 +3,7 @@ mod config;
 mod file_explorer;
 mod util;
 mod actions;
+mod calculator;
 
 use config::Config;
 use std::process;

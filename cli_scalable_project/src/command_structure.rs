@@ -49,7 +49,7 @@ impl fmt::Display for FileSistemCommands {
 impl fmt::Display for CalculatorCommands {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            CalculatorCommands::_Math => write!(f, "math"),
+            CalculatorCommands::_Math => write!(f, "-math"),
         }
     }
 }
